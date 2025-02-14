@@ -1,0 +1,69 @@
+# set to nil when packaging a release, 
+# or the long commit tag for the specific git branch
+%global commit_tag %{nil}
+
+# set with the commit date only if commit_tag not nil 
+# git version (i.e. master) in format date +Ymd
+%if "%{commit_tag}" != "%{nil}"
+%global commit_date %(git show -s --date=format:'%Y%m%d' %{commit_tag})
+%endif
+
+# repack non-release git branches as .xz with the commit date
+# in the following format <name>-<version>-<commit_date>.xz
+
+Name:           fcitx5-qt
+Version:        5.1.9
+Release:        %{?commit_date:~0.%{commit_date}.}1
+Summary:        Qt library and IM module for fcitx5
+Group:          Utilities
+License:        LGPLv2.1+ BSD-3-Clause
+URL:            https://github.com/fcitx/%name/
+
+# change the source URL depending on if the package is a release version or a git version
+%if "%{commit_tag}" != "%{nil}"
+Source0:        https://github.com/<org_name>/<project_name>/archive/%{commit_tag}.tar.gz#/%{name}-%{version}.xz
+%else
+Source0:        %url/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+%endif
+
+BuildSystem:   cmake
+BuildOption:  -DENABLE_QT5=OFF
+
+BuildRequires: cmake(ECM)
+BuildRequires: cmake(Qt6Core)
+BuildRequires: cmake(Qt6DBus)
+BuildRequires: cmake(Qt6Widgets)
+BuildRequires: cmake(Qt6Concurrent)
+BuildRequires: cmake(Qt6WaylandClient)
+BuildRequires: cmake(Qt6WaylandGlobalPrivate)
+BuildRequires: fcitx5-devel
+BuildRequires: gettext
+
+Provides:       fcitx-qt = %{version}
+Obsoletes:      fcitx-qt < 5
+
+%description
+Qt library and IM module for fcitx5
+
+%package devel
+Summary:       Development package for Qt library and IM module for fcitx5
+
+%description devel
+Development package for Qt library and IM module for fcitx5
+
+%files
+%license LICENSES/BSD-3-Clause.txt LICENSES/LGPL-2.1-or-later.txt
+%doc README.md
+%{_bindir}/%{name}6-immodule-probing
+%{_libdir}/libFcitx5Qt6*
+%{_libdir}/qt6/plugins/*
+%{_libdir}/fcitx5/qt6/*
+%{_datadir}/locale/*
+%{_datadir}/applications/org.fcitx.%{name}6-gui-wrapper.desktop
+%{_prefix}/lib/debug/*
+%{_libexecdir}/%{name}6-gui-wrapper
+
+%files devel
+%{_includedir}/Fcitx5Qt6/*
+%{_libdir}/cmake/*
+
