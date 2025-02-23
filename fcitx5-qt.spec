@@ -2,18 +2,11 @@
 # or the long commit tag for the specific git branch
 %global commit_tag %{nil}
 
-# set with the commit date only if commit_tag not nil 
-# git version (i.e. master) in format date +Ymd
-%if "%{commit_tag}" != "%{nil}"
-%global commit_date %(git show -s --date=format:'%Y%m%d' %{commit_tag})
-%endif
-
-# repack non-release git branches as .xz with the commit date
-# in the following format <name>-<version>-<commit_date>.xz
-
 Name:           fcitx5-qt
 Version:        5.1.9
-Release:        %{?commit_date:~0.%{commit_date}.}1
+# When using a commit_tag (i.e. not %{nil}) add a commit date 
+# decoration ~0.yyyyMMdd. to Release number  
+Release:        2
 Summary:        Qt library and IM module for fcitx5
 Group:          Utilities
 License:        LGPLv2.1+ BSD-3-Clause
@@ -36,11 +29,14 @@ BuildRequires: cmake(Qt6Widgets)
 BuildRequires: cmake(Qt6Concurrent)
 BuildRequires: cmake(Qt6WaylandClient)
 BuildRequires: cmake(Qt6WaylandGlobalPrivate)
+BuildRequires: pkgconfig(wayland-client)
+BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: fcitx5-devel
 BuildRequires: gettext
 
 Provides:       fcitx-qt = %{version}
 Obsoletes:      fcitx-qt < 5
+Obsoletes:      kcm-fcitx <= 0.5.6
 
 %description
 Qt library and IM module for fcitx5
