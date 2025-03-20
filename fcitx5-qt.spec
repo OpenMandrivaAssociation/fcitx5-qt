@@ -6,21 +6,21 @@ Name:           fcitx5-qt
 Version:        5.1.9
 # When using a commit_tag (i.e. not %{nil}) add a commit date 
 # decoration ~0.yyyyMMdd. to Release number  
-Release:        2
+Release:        3
 Summary:        Qt library and IM module for fcitx5
 Group:          Utilities
 License:        LGPLv2.1+ BSD-3-Clause
-URL:            https://github.com/fcitx/%name/
+URL:            https://github.com/fcitx/fcitx5-qt/
 
 # change the source URL depending on if the package is a release version or a git version
 %if "%{commit_tag}" != "%{nil}"
-Source0:        https://github.com/<org_name>/<project_name>/archive/%{commit_tag}.tar.gz#/%{name}-%{version}.xz
+Source0:        https://github.com/fcitx/fcitx5-qt/archive/%{commit_tag}.tar.gz#/%{name}-%{version}.xz
 %else
-Source0:        %url/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        https://github.com/fcitx/fcitx5-qt/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 %endif
 
 BuildSystem:   cmake
-BuildOption:  -DENABLE_QT5=OFF
+BuildOption:   -DENABLE_QT5=OFF
 
 BuildRequires: cmake(ECM)
 BuildRequires: cmake(Qt6Core)
@@ -56,10 +56,8 @@ Development package for Qt library and IM module for fcitx5
 %{_libdir}/fcitx5/qt6/*
 %{_datadir}/locale/*
 %{_datadir}/applications/org.fcitx.%{name}6-gui-wrapper.desktop
-%{_prefix}/lib/debug/*
 %{_libexecdir}/%{name}6-gui-wrapper
 
 %files devel
 %{_includedir}/Fcitx5Qt6/*
 %{_libdir}/cmake/*
-
