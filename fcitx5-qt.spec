@@ -6,7 +6,7 @@ Name:           fcitx5-qt
 Version:        5.1.9
 # When using a commit_tag (i.e. not %{nil}) add a commit date 
 # decoration ~0.yyyyMMdd. to Release number  
-Release:        3
+Release:        4
 Summary:        Qt library and IM module for fcitx5
 Group:          Utilities
 License:        LGPLv2.1+ BSD-3-Clause
@@ -42,7 +42,8 @@ Obsoletes:      kcm-fcitx <= 0.5.6
 Qt library and IM module for fcitx5
 
 %package devel
-Summary:       Development package for Qt library and IM module for fcitx5
+Summary:	Development package for Qt library and IM module for fcitx5
+Requires:	%{name} = %{EVRD}
 
 %description devel
 Development package for Qt library and IM module for fcitx5
