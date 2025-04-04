@@ -6,7 +6,7 @@ Name:           fcitx5-qt
 Version:        5.1.9
 # When using a commit_tag (i.e. not %{nil}) add a commit date 
 # decoration ~0.yyyyMMdd. to Release number  
-Release:        4
+Release:        5
 Summary:        Qt library and IM module for fcitx5
 Group:          Utilities
 License:        LGPLv2.1+ BSD-3-Clause
