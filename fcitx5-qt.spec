@@ -3,7 +3,7 @@
 %global commit_tag %{nil}
 
 Name:           fcitx5-qt
-Version:        5.1.11
+Version:        5.1.14
 # When using a commit_tag (i.e. not %{nil}) add a commit date 
 # decoration ~0.yyyyMMdd. to Release number  
 Release:        1
